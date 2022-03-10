@@ -12,18 +12,17 @@ const personWithIterator = {
   firstName: 'John',
   lastName: 'Doe',
   [Symbol.iterator]() {
-    const entries = Object.entries(this);
     let index = 0;
-    let length = entries.length - 1;
+    let entries = Object.entries(this);
 
     return {
       [Symbol.iterator]() {
         return this;
       },
       next() {
-        if (index <= length) {
+        if (index < entries.length) {
+          const [key, value] = entries[index];
           index++;
-          const [key, value] = entries.shift();
           return { value: [key, value], done: false };
         }
 
